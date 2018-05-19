@@ -15,41 +15,42 @@ export const Complexity = [
 
 export const Material = [
   {
-    "description": "sehr billig",
-    "modifier":  –20
+    "name": "sehr billiges Material",
+    "effect": "Änderung um -20 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes"
   },
   {
-    "description": "billig",
-    "modifier": –10
+    "name": "billiges Material",
+    "effect": "Änderung um -10 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes"
   },
   {
-    "description": "durchschnittlich",
-    "modifier": 0
+    "name": "durchschnittliches Material",
+    "effect": "Änderung um 0 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes"
   },
   {
-    "description": "hochwertig",
-    "modifier": 10
+    "name": "hochwertiges Material",
+    "effect": "Änderung um 10 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes"
   },
   {
-    "description": "sehr hochwertig",
-    "modifier":  20
+    "name": "sehr hochwertiges Material",
+    "effect": "Änderung um 20 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes"
   }
 ]
 
 export const Costs = [
   {
-    "name": "Herstellung",
-    "costs": 25
+    "name": "Neue Herstellung",
+    "cost": 25
   },
   {
     "name": "Reperatur",
-    "costs": 20
+    "cost": 20
   }
 ]
 
 export const Crafting = [
   {
     "name": "misc",
+    "description": "Gegenstand",
     "talents": [
       {
         "description": "Mit dem Talent Fesseln können Helden Netze knüpfen und Seile flechten.",
@@ -87,6 +88,7 @@ export const Crafting = [
   },
   {
     "name": "weapon",
+    "description": "Waffe",
     "talents": [
       {
         "description": "hölzerne Waffen. z.B.: Speere und Holzspeere, Armbrüste, Bögen, Wurfkeulen, aber auch Waffen aus Horn oder Knochen",
@@ -104,6 +106,7 @@ export const Crafting = [
   },
   {
     "name": "armor",
+    "description": "Rüstung",
     "talents": [
       {
         "description": "Holzrüstungen, Hornrüstungen, Knochenrüstungen",
@@ -166,7 +169,7 @@ export const Intervals = [
 export const Materials = {
   "weapons": [
     {
-      "type": "Metall",
+      "type": "Metallbearbeitung",
       "materials": [
         {"name": "Bronze", "effect": "-1 TP", "modifier": 1, "bf": -4},
         {"name": "Eisen", "effect": "-1 TP", "modifier": 1, "bf": -2},
@@ -182,7 +185,7 @@ export const Materials = {
       ]
     },
     {
-      "type": "Holz",
+      "type": "Holzbearbeitung",
       "materials": [
         {"name": "Ebenholz", "effect": "keine Effekte", "modifier": "bei Bögen: +2; bei anderen Kampftechniken: +/-0", "bf": 1},
         {"name": "Eisenbaum", "effect": "+1 TP", "modifier": "-2", "bf": 3},
@@ -193,7 +196,7 @@ export const Materials = {
       ]
     },
     {
-      "type": "Stein",
+      "type": "Steinbearbeitung",
       "materials": [
         {"name": "Vulkanglas", "effect": "-1 TP, Nur bestimmte Waffen/Rüstungen, etwa Speere, Beile und Messer eignen sich als Steinwaffen.", "modifier": "2", "bf": -2},
         {"name": "Feuerstein", "effect": "+1 TP gegen Metallrüstungen, Nur bestimmte Waffen/Rüstungen, etwa Speere, Beile und Messer eignen sich als Steinwaffen.", "modifier": -4, "bf": 1}
@@ -202,7 +205,7 @@ export const Materials = {
   ],
   "armors": [
     {
-      "type": "Metall",
+      "type": "Metallbearbeitung",
       "materials": [
         {"name": "Bronze", "effects": "-1 RS", "modifier": "+2", "structure": "-4"},
         {"name": "Großer Fluss-Stahl", "effects": "keine Effekte", "modifier": "+/-0", "structure": "+/-0"},
@@ -216,7 +219,7 @@ export const Materials = {
       ]
     },
     {
-      "type": "Holz",
+      "type": "Holzbearbeitung",
       "materials": [
         {"name": "Ebenholz", "effects": "keine Effekte", "modifier": "+/-0", "structure": "+1"},
         {"name": "Eisenbaum", "effects": "Abzüge auf GS und INI durch BE können ignoriert werden", "modifier": "-2", "structure": "+3"},
@@ -227,7 +230,7 @@ export const Materials = {
       ]
     },
     {
-      "type": "Stoff",
+      "type": "Stoffbearbeitung",
       "materials": [
         {"name": "Drôler Stoff", "effects": "keine Effekte", "modifier": "+1", "structure": "+/-0"},
         {"name": "Phraischafwolle", "effects": "Abzüge auf GS durch BE können ignoriert werden", "modifier": "+/-0", "structure": "+1"}
@@ -253,34 +256,34 @@ export const Enhancements = {
   ],
   "armors": [
     {"effect": "+1 RS", "modifier": -5, "interval": 5},
-    {"effect": "Ignorieren von –1 GS durch BE oder zusätzliche Abzüge", "modifier": -1, "interval": 2},
-    {"effect": "Ignorieren von –1 INI durch BE oder zusätzliche Abzüge", "modifier": -1, "interval": 2},
+    {"effect": "Ignorieren von -1 GS durch BE oder zusätzliche Abzüge", "modifier": -1, "interval": 2},
+    {"effect": "Ignorieren von -1 INI durch BE oder zusätzliche Abzüge", "modifier": -1, "interval": 2},
     {"effect": "+1 Stabilitätswert", "modifier": -1, "interval": 1.5}
   ]
 };
 
 export const Secrets = [
   {
-    "name": "Arkanium"
+    "name": "Arkanium",
     "description": "Das von Arkanium ist nur wenigen Schmieden, vor allem in den Tulamidenlanden, geläufig.",
     "requirements": "Metallbearbeitung 14",
     "ap": 4
   },
   {
-    "name": "Endurium"
+    "name": "Endurium",
     "description": "Nur ganz, ganz wenige Schmiede kennen das Geheimnis des Enduriums und seiner Verarbeitung.",
     "requirements": "Metallbearbeitung 16",
     "ap": 5
   },
   {
-    "name": "Mindorium"
+    "name": "Mindorium",
     "description": "Wie man aus Mindorit Mindorium gewinnt, ist zwar ein gut gehütetes Geheimnis, aber hin und wieder gibt es Schmiede, die sich darauf verstehen.",
     "requirements": "Metallbearbeitung 12",
     "ap": 3
   },
   {
-    "name": "Titanium"
-    "description": "So gut wie niemand weiß, wie man Titanium verarbeitet – da es einfach noch niemand ausprobieren konnte.",
+    "name": "Titanium",
+    "description": "So gut wie niemand weiß, wie man Titanium verarbeitet - da es einfach noch niemand ausprobieren konnte.",
     "requirements": "Metallbearbeitung 18",
     "ap": 6
   }
@@ -295,15 +298,15 @@ export const MagicMetals = {
       "price": "2.000 Dukaten pro Stein",
       "purities": [
         {
-          "structure": "+/–0",
+          "structure": "+/-0",
           "effect": "+1 RS gegen magische Angriffe, Rüstung magisch",
-          "modifier": "–3",
+          "modifier": "-3",
           "purity": 10
         },
         {
-          "structure": "+/–0",
+          "structure": "+/-0",
           "effect": "+2 RS gegen magische Angriffe, Rüstung magisch",
-          "modifier": "–6",
+          "modifier": "-6",
           "purity": 25
         }
       ]
@@ -315,19 +318,19 @@ export const MagicMetals = {
         {
           "structure": "1",
           "effect": "+1 RS, Rüstung magisch",
-          "modifier": "–2",
+          "modifier": "-2",
           "purity": 10
         },
         {
           "structure": "2",
           "effect": "+2 RS, Rüstung magisch",
-          "modifier": "–3",
+          "modifier": "-3",
           "purity": 25
         },
         {
           "structure": "8",
           "effect": "+3 RS, Rüstung magisch",
-          "modifier": "–4",
+          "modifier": "-4",
           "purity": 100
         }
       ],
@@ -339,15 +342,15 @@ export const MagicMetals = {
       "price": "200 Dukaten pro Stein",
       "purities": [
         {
-          "structure": "+/–0",
+          "structure": "+/-0",
           "effect": "+1 RS gegen Geister, Rüstung magisch",
-          "modifier": "–2",
+          "modifier": "-2",
           "purity": 10
         },
         {
-          "structure": "+/–0",
+          "structure": "+/-0",
           "effect": "+2 RS gegen Geister, Rüstung magisch",
-          "modifier": "–4",
+          "modifier": "-4",
           "purity": 25
         }
       ]
@@ -359,19 +362,19 @@ export const MagicMetals = {
         {
           "structure": "5",
           "effect": "+2 RS, Abzüge auf GS und INI durch BE können ignoriert werden, Rüstung magisch",
-          "modifier": "–5",
+          "modifier": "-5",
           "purity": 10
         },
         {
           "structure": "10",
           "effect": "+3 RS, Abzüge auf GS und INI durch BE können ignoriert werden, Rüstung magisch",
-          "modifier": "–6",
+          "modifier": "-6",
           "purity": 25
         },
         {
           "structure": "15",
           "effect": "+4 RS, Abzüge auf GS und INI durch BE können ignoriert werden, Rüstung magisch",
-          "modifier": "–7",
+          "modifier": "-7",
           "purity": 100
         }
       ],
@@ -385,21 +388,21 @@ export const MagicMetals = {
       "price": "2.000 Dukaten pro Stein",
       "purities": [
         {
-          "bf": "–1",
+          "bf": "-1",
           "effect": "+2 TP gegen magische Wesen, Waffe magisch",
-          "modifier": "+/–0",
+          "modifier": "+/-0",
           "purity": 50
         },
         {
-          "bf": "+/–0",
+          "bf": "+/-0",
           "effect": "+3 TP gegen magische Wesen, Waffe magisch",
-          "modifier": "–1",
+          "modifier": "-1",
           "purity": 75
         },
         {
           "bf": "+1",
           "effect": "+4 TP gegen magische Wesen, Waffe magisch",
-          "modifier": "–2",
+          "modifier": "-2",
           "purity": 100
         }
       ]
@@ -411,19 +414,19 @@ export const MagicMetals = {
         {
           "bf": "1",
           "effect": "+1 TP, Waffe magisch",
-          "modifier": "–3",
+          "modifier": "-3",
           "purity": 25
         },
         {
           "bf": "2",
           "effect": "+1 TP, +1 AT-Mod, Waffe magisch",
-          "modifier": "–3",
+          "modifier": "-3",
           "purity": 50
         },
         {
           "bf": "4",
           "effect": "+2 TP, +1 AT-Mod, Waffe magisch",
-          "modifier": "–3",
+          "modifier": "-3",
           "purity": 100
         }
       ],
@@ -435,21 +438,21 @@ export const MagicMetals = {
       "price": "200 Dukaten pro Stein",
       "purities": [
         {
-          "bf": "–1",
+          "bf": "-1",
           "effect": "+1 TP gegen magische Wesen, Waffe magisch",
-          "modifier": "+/–0",
+          "modifier": "+/-0",
           "purity": 50
         },
         {
-          "bf": "–1",
+          "bf": "-1",
           "effect": "+1 TP gegen magische Wesen, doppelter Schaden gegen Geister (dafür kein Bonus-TP von +1) , Waffe magisch",
-          "modifier": "–1",
+          "modifier": "-1",
           "purity": 75
         },
         {
-          "bf": "–1",
+          "bf": "-1",
           "effect": "+2 TP gegen magische Wesen, doppelter Schaden gegen Geister (dafür keine Bonus-TP von +2) , Waffe magisch",
-          "modifier": "–2",
+          "modifier": "-2",
           "purity": 100
         }
       ]
@@ -461,19 +464,19 @@ export const MagicMetals = {
         {
           "bf": "5",
           "effect": "+3 TP, Waffe magisch",
-          "modifier": "–5",
+          "modifier": "-5",
           "purity": 25
         },
         {
           "bf": "10",
           "effect": "+3 TP, +1 AT-Mod, unzerbrechlich, Waffe magisch",
-          "modifier": "–5",
+          "modifier": "-5",
           "purity": 50
         },
         {
           "bf": "15",
           "effect": "+4 TP, +1 AT-Mod, unzerbrechlich, Waffe magisch",
-          "modifier": "–5",
+          "modifier": "-5",
           "purity": 100
         }
       ],
