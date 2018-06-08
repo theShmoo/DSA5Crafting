@@ -3,30 +3,33 @@ import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
 
-import DSASelect from './DSASelect';
-import DSAStep from './DSAStep';
-import {Crafting} from '../data/DSACraftingData';
+import DSASelect from '../controls/DSASelect';
+import DSAStepContent from '../controls/DSAStepContent';
+import { Crafting } from '../data/DSACraftingData';
+import { DefaultType } from '../data/DSACraftingDefaults';
 
-const options = Crafting.map((c) => {
-  return {value: c.name, label: c.description};
-});
+const options = Crafting.map((c) => ({value: c.name, label: c.description}));
 
+const ID = "objecttype"
 
 export default class DSAObjectTypeChooser extends React.Component {
 
-  handleChange = (e) => {
+  handleChange = (value) => {
     // find the right cost object:
-    const f = Crafting.find( (c) => c.name === e.target.value );
-    this.props.onChange("objecttype", f);
+    const f = Crafting.find( (c) => c.name === value );
+    this.props.onChange(ID, f);
+  }
+
+  handleBack = () => {
+    this.props.stepper.back(ID, DefaultType);
   }
 
   render() {
     const {stepper, objecttype} = this.props
-    const {next, back} = stepper;
     const active = objecttype !== undefined;
-    return <DSAStep active={active} handleNext={next} handleBack={back}>
+    return <DSAStepContent active={active} handleNext={stepper.next} handleBack={this.handleBack}>
       <Typography>Wähle die Art des Gegenstandes.</Typography>
-      <form autoComplete="off">
+      <form>
         <DSASelect
           options={options}
           value={active ? objecttype.name : ""}
@@ -34,7 +37,7 @@ export default class DSAObjectTypeChooser extends React.Component {
           label="Wähle"
         />
       </form>
-    </DSAStep>
+    </DSAStepContent>
   }
 }
 

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
 
-import DSASelect from './DSASelect';
-import DSAStep from './DSAStep';
+import DSASelect from '../controls/DSASelect';
+import DSAStepContent from '../controls/DSAStepContent';
+import DSADescription from '../controls/DSADescription';
 import {Complexity} from '../data/DSACraftingData';
 
 const options = Complexity.map((c) => {
@@ -13,9 +14,9 @@ const options = Complexity.map((c) => {
 
 export default class DSAComplexityChooser extends React.Component {
 
-  handleChange = (e) => {
+  handleChange = (value) => {
     // find the right cost object:
-    const f = Complexity.find( (c) => c.name === e.target.value );
+    const f = Complexity.find( (c) => c.name === value );
     this.props.onChange("complexity", f);
   }
 
@@ -23,18 +24,18 @@ export default class DSAComplexityChooser extends React.Component {
     const {stepper, complexity} = this.props
     const {next, back} = stepper;
     const active = complexity !== undefined;
-    return <DSAStep active={active} handleNext={next} handleBack={back}>
+    return <DSAStepContent active={active} handleNext={next} handleBack={back}>
       <Typography>Wähle die Komplexität des Gegenstandes.</Typography>
-      <form autoComplete="off">
+      <form>
         <DSASelect
           options={options}
           value={active ? complexity.name : ""}
           onChange={this.handleChange}
           label="Wähle"
-          helperText={active ? complexity.description : ""}
         />
       </form>
-    </DSAStep>
+      {active && <DSADescription caption="Komplexität" text={complexity.description} />}
+    </DSAStepContent>
   }
 }
 

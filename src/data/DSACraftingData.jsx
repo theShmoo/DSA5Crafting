@@ -13,26 +13,31 @@ export const Complexity = [
   }
 ];
 
-export const Material = [
+export const Quality = [
   {
     "name": "sehr billiges Material",
-    "effect": "Änderung um -20 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes"
+    "effect": "Änderung um -20 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes",
+    "cost": -20
   },
   {
     "name": "billiges Material",
-    "effect": "Änderung um -10 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes"
+    "effect": "Änderung um -10 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes",
+    "cost": -10
   },
   {
     "name": "durchschnittliches Material",
-    "effect": "Änderung um 0 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes"
+    "effect": "Änderung um 0 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes",
+    "cost": 0
   },
   {
     "name": "hochwertiges Material",
-    "effect": "Änderung um 10 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes"
+    "effect": "Änderung um 10 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes",
+    "cost": 10
   },
   {
     "name": "sehr hochwertiges Material",
-    "effect": "Änderung um 20 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes"
+    "effect": "Änderung um 20 % vom Herstellungspreis und der Strukturpunkte des Gegenstandes",
+    "cost": 20
   }
 ]
 
@@ -54,35 +59,43 @@ export const Crafting = [
     "talents": [
       {
         "description": "Mit dem Talent Fesseln können Helden Netze knüpfen und Seile flechten.",
-        "name": "Fesseln"
+        "name": "Fesseln",
+        "test": ["KL","FF","KK"]
       },
       {
         "description": "Der Baustoff Holz wird sowohl beim Bau von Häusern, Booten und Schiffen verwendet, als auch bei einigen Waffen, Alltagsgegenständen und sogar Rüstungen.",
-        "name": "Holzbearbeitung"
+        "name": "Holzbearbeitung",
+        "test": ["FF","GE","KK"]
       },
       {
         "description": "Zwar ist Essen kein Gegenstand im klassischen Sinn, aber das Kreieren von Torten und das Backen von Brot funktioniert regeltechnisch wie die Herstellung anderer Gegenstände.",
-        "name": "Lebensmittelbearbeitung"
+        "name": "Lebensmittelbearbeitung",
+        "test": ["IN","FF","FF"]
       },
       {
         "description": "Dieses Talent begegnet den Helden vor allem dann, wenn sie eine Lederrüstung herstellen oder flicken wollen, oder sie den Pelz eines Tiers zu einer wärmenden Mütze verarbeiten.",
-        "name": "Lederbearbeitung"
+        "name": "Lederbearbeitung",
+        "test": ["FF","GE","KO"]
       },
       {
         "description": "Auch wenn es ein sehr spezieller Bereich ist: Mit dem Talent Malen & Zeichnen kann ein Held Bilder und Gemälde erschaffen.",
-        "name": "Malen & Zeichnen"
+        "name": "Malen & Zeichnen",
+        "test": ["IN","FF","FF"]
       },
       {
         "description": "Metall wird in erster Linie für Gegenstände wie Kerzenleuchter, Hufeisen, Silberbesteck o.Ä. verwendet.",
-        "name": "Metallbearbeitung"
+        "name": "Metallbearbeitung",
+        "test": ["FF","KO","KK"]
       },
       {
         "description": "Durch Steinbearbeitung kann man zum einen steinerne Waffen herstellen, zum anderen auch Kunstwerke aus Alabaster und Marmor, kleine Statuetten oder Mauern aus Stein.",
-        "name": "Steinbearbeitung"
+        "name": "Steinbearbeitung",
+        "test": ["FF","FF","KK"]
       },
       {
         "description": "Die Stoffbearbeitung gibt dem Helden die Möglichkeit, Hemden, Hosen und andere Kleidungsstücke herzustellen oder zu flicken. Sogar für das Erschaffen von Tuchrüstungen kann man dieses Talent verwenden.",
-        "name": "Stoffbearbeitung"
+        "name": "Stoffbearbeitung",
+        "test": ["KL","FF","FF"]
       }
     ]
   },
@@ -92,15 +105,18 @@ export const Crafting = [
     "talents": [
       {
         "description": "hölzerne Waffen. z.B.: Speere und Holzspeere, Armbrüste, Bögen, Wurfkeulen, aber auch Waffen aus Horn oder Knochen",
-        "name": "Holzbearbeitung"
+        "name": "Holzbearbeitung",
+        "test": ["FF","GE","KK"]
       },
       {
         "description": "metallische Waffen. z.B.: Schwerter, Streitäxte, Zweihänder",
-        "name": "Metallbearbeitung"
+        "name": "Metallbearbeitung",
+        "test": ["FF","KO","KK"]
       },
       {
         "description": "steinerne Waffen. z.B.: Druidendolch",
-        "name": "Steinbearbeitung"
+        "name": "Steinbearbeitung",
+        "test": ["FF","FF","KK"]
       }
     ]
   },
@@ -110,19 +126,23 @@ export const Crafting = [
     "talents": [
       {
         "description": "Holzrüstungen, Hornrüstungen, Knochenrüstungen",
-        "name": "Holzbearbeitung"
+        "name": "Holzbearbeitung",
+        "test": ["FF","GE","KK"]
       },
       {
         "description": "Lederrüstungen, Schuppenrüstungen aus echten Drachenschuppen",
-        "name": "Lederbearbeitung"
+        "name": "Lederbearbeitung",
+        "test": ["FF","GE","KO"]
       },
       {
         "description": "Kettenrüstungen, Schuppenrüstungen, Plattenrüstungen",
-        "name": "Metallbearbeitung"
+        "name": "Metallbearbeitung",
+        "test": ["FF","KO","KK"]
       },
       {
         "description": "Stoffrüstungen",
-        "name": "Stoffbearbeitung"
+        "name": "Stoffbearbeitung",
+        "test": ["KL","FF","FF"]
       }
     ]
   }
@@ -167,7 +187,7 @@ export const Intervals = [
 ];
 
 export const Materials = {
-  "weapons": [
+  "weapon": [
     {
       "type": "Metallbearbeitung",
       "materials": [
@@ -192,7 +212,7 @@ export const Materials = {
         {"name": "Steineiche", "effect": "+1 TP", "modifier": "-1", "bf": 4},
         {"name": "Zyklopenzeder", "effect": "keine Effekte", "modifier": "+1", "bf": 0},
         {"name": "Horn", "effect": "-1 TP", "modifier": "1", "bf": -2},
-        {"name": "Knochen", "effect": "-2 TP", "modifier": "0", "bf": -2}
+        {"name": "Knochen", "effect": "-2 TP", "modifier": "+/-0", "bf": -2}
       ]
     },
     {
@@ -203,58 +223,58 @@ export const Materials = {
       ]
     }
   ],
-  "armors": [
+  "armor": [
     {
       "type": "Metallbearbeitung",
       "materials": [
-        {"name": "Bronze", "effects": "-1 RS", "modifier": "+2", "structure": "-4"},
-        {"name": "Großer Fluss-Stahl", "effects": "keine Effekte", "modifier": "+/-0", "structure": "+/-0"},
-        {"name": "Khunchomer Stahl", "effects": "Abzüge auf INI durch BE können ignoriert werden", "modifier": "+/-0", "structure": "-1"},
-        {"name": "Maraskanstahl", "effects": "Abzüge auf GS und INI durch BE können ignoriert werden", "modifier": "+1", "structure": "+1"},
-        {"name": "Mirhamer Stahl", "effects": "Resistenz gegen Rost", "modifier": "+/-0", "structure": "+/-0"},
-        {"name": "Premer Stahl", "effects": "keine Effekte", "modifier": "+1", "structure": "+/-0"},
-        {"name": "Toschkril", "effects": "+1 RS", "modifier": "-3", "structure": "+4", "tries": 5},
-        {"name": "Uhdenberger Stahl", "effects": "keine Effekte", "modifier": "-1", "structure": "+/-0"},
-        {"name": "Zwergenstahl", "effects": "keine Effekte", "modifier": "+2", "structure": "+2"}
+        {"name": "Bronze", "effect": "-1 RS", "modifier": "+2", "structure": "-4"},
+        {"name": "Großer Fluss-Stahl", "effect": "keine Effekte", "modifier": "+/-0", "structure": "+/-0"},
+        {"name": "Khunchomer Stahl", "effect": "Abzüge auf INI durch BE können ignoriert werden", "modifier": "+/-0", "structure": "-1"},
+        {"name": "Maraskanstahl", "effect": "Abzüge auf GS und INI durch BE können ignoriert werden", "modifier": "+1", "structure": "+1"},
+        {"name": "Mirhamer Stahl", "effect": "Resistenz gegen Rost", "modifier": "+/-0", "structure": "+/-0"},
+        {"name": "Premer Stahl", "effect": "keine Effekte", "modifier": "+1", "structure": "+/-0"},
+        {"name": "Toschkril", "effect": "+1 RS", "modifier": "-3", "structure": "+4", "tries": 5},
+        {"name": "Uhdenberger Stahl", "effect": "keine Effekte", "modifier": "-1", "structure": "+/-0"},
+        {"name": "Zwergenstahl", "effect": "keine Effekte", "modifier": "+2", "structure": "+2"}
       ]
     },
     {
       "type": "Holzbearbeitung",
       "materials": [
-        {"name": "Ebenholz", "effects": "keine Effekte", "modifier": "+/-0", "structure": "+1"},
-        {"name": "Eisenbaum", "effects": "Abzüge auf GS und INI durch BE können ignoriert werden", "modifier": "-2", "structure": "+3"},
-        {"name": "Steineiche", "effects": "+1 RS, +2 BE", "modifier": "-1", "structure": "+4"},
-        {"name": "Zyklopenzeder", "effects": "keine Effekte", "modifier": "+1", "structure": "+/-0"},
-        {"name": "Horn", "effects": "keine Effekte", "modifier": "-1", "structure": "-2"},
-        {"name": "Knochen", "effects": "keine Effekte", "modifier": "-1", "structure": "-2"}
+        {"name": "Ebenholz", "effect": "keine Effekte", "modifier": "+/-0", "structure": "+1"},
+        {"name": "Eisenbaum", "effect": "Abzüge auf GS und INI durch BE können ignoriert werden", "modifier": "-2", "structure": "+3"},
+        {"name": "Steineiche", "effect": "+1 RS, +2 BE", "modifier": "-1", "structure": "+4"},
+        {"name": "Zyklopenzeder", "effect": "keine Effekte", "modifier": "+1", "structure": "+/-0"},
+        {"name": "Horn", "effect": "keine Effekte", "modifier": "-1", "structure": "-2"},
+        {"name": "Knochen", "effect": "keine Effekte", "modifier": "-1", "structure": "-2"}
       ]
     },
     {
       "type": "Stoffbearbeitung",
       "materials": [
-        {"name": "Drôler Stoff", "effects": "keine Effekte", "modifier": "+1", "structure": "+/-0"},
-        {"name": "Phraischafwolle", "effects": "Abzüge auf GS durch BE können ignoriert werden", "modifier": "+/-0", "structure": "+1"}
+        {"name": "Drôler Stoff", "effect": "keine Effekte", "modifier": "+1", "structure": "+/-0"},
+        {"name": "Phraischafwolle", "effect": "Abzüge auf GS durch BE können ignoriert werden", "modifier": "+/-0", "structure": "+1"}
       ]
     },
     {
-      "type": "Leder",
+      "type": "Lederbearbeitung",
       "materials": [
-        {"name": "Iryanleder", "effects": "Feuerfest: Gegen Angriffe durch Feuer (z. B. einen Ignifaxius oder den Flammenstrahl eines Drachen) zählt der RS doppelt.", "modifier": "+1", "structure": "+/-0"},
-        {"name": "Wollnashornleder", "effects": "kein Schaden durch Messergras", "modifier": "-1", "structure": "+1"}
+        {"name": "Iryanleder", "effect": "Feuerfest: Gegen Angriffe durch Feuer (z. B. einen Ignifaxius oder den Flammenstrahl eines Drachen) zählt der RS doppelt.", "modifier": "+1", "structure": "+/-0"},
+        {"name": "Wollnashornleder", "effect": "kein Schaden durch Messergras", "modifier": "-1", "structure": "+1"}
       ]
     }
   ]
 };
 
 export const Enhancements = {
-  "weapons": [
+  "weapon": [
     {"effect": "+1 AT-Modifikator", "modifier": -1, "interval": 2},
     {"effect": "+1 PA-Modifikator", "modifier": -2, "interval": 3},
     {"effect": "+1 TP", "modifier": -1, "interval": 4},
     {"effect": "+10 % Reichweite von Fernkampfwaffen", "modifier": -1, "interval": 3},
     {"effect": "+1 Bruchfaktorwert", "modifier": -1, "interval": 1.5}
   ],
-  "armors": [
+  "armor": [
     {"effect": "+1 RS", "modifier": -5, "interval": 5},
     {"effect": "Ignorieren von -1 GS durch BE oder zusätzliche Abzüge", "modifier": -1, "interval": 2},
     {"effect": "Ignorieren von -1 INI durch BE oder zusätzliche Abzüge", "modifier": -1, "interval": 2},
@@ -291,7 +311,7 @@ export const Secrets = [
 
 
 export const MagicMetals = {
-  "armors": [
+  "armor": [
     {
       "info": "Aus diesen Materialien lassen sich nur Plattenrüstungen herstellen.",
       "name": "Arkanium",
@@ -381,7 +401,7 @@ export const MagicMetals = {
       "tries": 5
     }
   ],
-  "weapons": [
+  "weapon": [
     {
       "info": "Aus diesem Material lassen sich nur Streitkolben, Rabenschnäbel, Morgensterne und ähnliche Wuchtwaffen ohne Klinge herstellen.",
       "name": "Arkanium",

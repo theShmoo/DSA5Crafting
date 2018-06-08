@@ -2,13 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import DSAStepper from './DSAStepper';
-import DSACostChooser from './DSACostChooser';
-import DSAComplexityChooser from './DSAComplexityChooser';
-import DSAMaterialChooser from './DSAMaterialChooser';
-import DSAObjectTypeChooser from './DSAObjectTypeChooser';
-import DSAObjectChooser from './DSAObjectChooser';
-import DSATalentChooser from './DSATalentChooser';
+import DSACraftingSummary from './DSACraftingSummary';
+
+import DSAStepper from '../controls/DSAStepper';
+import DSAInfoBox from '../controls/DSAInfoBox';
+
+import DSACostChooser from '../chooser/DSACostChooser';
+import DSAComplexityChooser from '../chooser/DSAComplexityChooser';
+import DSAMaterialChooser from '../chooser/DSAMaterialChooser';
+import DSAObjectTypeChooser from '../chooser/DSAObjectTypeChooser';
+import DSAObjectChooser from '../chooser/DSAObjectChooser';
+import DSATalentChooser from '../chooser/DSATalentChooser';
+import DSAEnhancementChooser from '../chooser/DSAEnhancementChooser';
+
+import {DefaultState} from '../data/DSACraftingDefaults'
 
 const styles = {
   root: {
@@ -18,9 +25,7 @@ const styles = {
 
 class DSAMain extends React.Component {
 
-  state = {
-    activeStep: 0,
-  };
+  state = DefaultState();
 
   handleNext = () => {
     this.setState({
@@ -28,26 +33,33 @@ class DSAMain extends React.Component {
     });
   };
 
-  handleBack = () => {
+  handleBack = (name, value) => {
+    let craft = this.state.craft;
+    craft[name] = value;
     this.setState({
+      craft: craft,
       activeStep: this.state.activeStep - 1,
     });
   };
 
+  handleSimpleBack = () => {
+    this.setState({activeStep: this.state.activeStep - 1});
+  };
+
   handleReset = () => {
-    this.setState({
-      activeStep: 0,
-    });
+    this.setState(DefaultState());
   };
 
   handleStateChange = (name, value) => {
+    let craft = this.state.craft;
+    craft[name] = value;
     this.setState({
-      [name]: value
+      craft: craft
     })
   }
 
   getSteps() {
-    const {cost, complexity, material, objecttype, talent, object} = this.state;
+    const {cost, complexity, materials, objecttype, talent, object, enhancements} = this.state.craft;
     const handlers = {next: this.handleNext, back: this.handleBack};
     let steps = [
       {
@@ -69,6 +81,10 @@ class DSAMain extends React.Component {
         content: <DSAObjectChooser objecttype={objecttype} talent={talent} object={object} stepper={handlers} onChange={this.handleStateChange} />,
         label:  object ? object.name : "Gegenstand"
       });
+      steps.push({
+        content: <DSAEnhancementChooser objecttype={objecttype} enhancements={enhancements} onChange={this.handleStateChange} stepper={handlers} />,
+        label: enhancements ? enhancements.length + " Verbesserungen" : "Verbesserungen"
+      })
     }
     else {
       steps.push({
@@ -77,20 +93,25 @@ class DSAMain extends React.Component {
       })
     }
     steps.push({
-      content: <DSAMaterialChooser material={material} objecttype={objecttype} talent={talent} stepper={handlers} onChange={this.handleStateChange} />,
-      label:  material ? material.description : "Art des Materials"
+      content: <DSAMaterialChooser materials={materials} objecttype={objecttype} talent={talent} stepper={handlers} onChange={this.handleStateChange} />,
+      label: "Qualität: " + materials.quality.name +
+        (materials.material ? " - " + materials.material.name : "")
     });
     return steps;
   }
 
+  renderSummary() {
+    return <DSACraftingSummary onReset={this.handleReset} onBack={this.handleSimpleBack} craft={this.state.craft} />
+  }
   render() {
-    const { classes,  } = this.props;
+    const { classes } = this.props;
     const { activeStep } = this.state;
     return (
       <main className={classes.root}>
+        <DSAInfoBox text="Folge den Schritten um einen Gegenstand herzustellen oder zu reparieren." />
         <DSAStepper
           steps={this.getSteps()}
-          activeStep={activeStep} handleReset={this.handleReset} />
+          activeStep={activeStep} completed={this.renderSummary()} />
       </main>
     );
   }

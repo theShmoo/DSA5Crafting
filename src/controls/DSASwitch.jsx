@@ -15,7 +15,7 @@ class DSASwitch extends React.Component {
 
   handleChange = event => {
     const {onChange, name} = this.props;
-    onChange([name], event.target.checked);
+    onChange(name, event.target.checked);
   };
 
   render() {
@@ -28,13 +28,14 @@ class DSASwitch extends React.Component {
             <Switch
               checked={checked}
               disabled={disabled}
-              onChange={this.handleChange()}
+              onChange={this.handleChange}
               value={name}
               classes={{
                 switchBase: classes.switchBase,
                 checked: classes.checked,
                 bar: classes.bar,
               }}
+              color="primary"
             />
           }
           label={label}
@@ -53,8 +54,7 @@ DSASwitch.propTypes = {
 };
 
 DSASwitch.defaultTypes = {
-  disabled: false,
-  name: this.props.label
+  disabled: false
 };
 
 export default withStyles(styles)(DSASwitch);

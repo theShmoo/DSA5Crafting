@@ -4,9 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
-  root: {
-    width: '90%',
-  },
+  root: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginTop: theme.spacing.unit * 3,
+    overflow: "-webkit-paged-x"
+  }),
   button: {
     marginTop: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -16,7 +19,7 @@ const styles = theme => ({
   },
 });
 
-class DSAStep extends React.Component {
+class DSAStepContent extends React.Component {
 
   render() {
     const { classes, children, active, first, last, handleBack, handleNext } = this.props;
@@ -31,7 +34,7 @@ class DSAStep extends React.Component {
               onClick={handleBack}
               className={classes.button}
             >
-              Back
+              Zurück
             </Button>
             <Button
               variant="raised"
@@ -40,7 +43,7 @@ class DSAStep extends React.Component {
               disabled={!active}
               className={classes.button}
             >
-              {last ? 'Finish' : 'Next'}
+              {last ? 'Fertig' : 'Weiter'}
             </Button>
           </div>
         </div>
@@ -49,14 +52,14 @@ class DSAStep extends React.Component {
   }
 }
 
-DSAStep.propTypes = {
+DSAStepContent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-DSAStep.defaultProps = {
+DSAStepContent.defaultProps = {
   active: true,
   first: false,
   last: false
 };
 
-export default withStyles(styles)(DSAStep);
+export default withStyles(styles)(DSAStepContent);

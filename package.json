@@ -11,7 +11,8 @@
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-scripts": "latest"
+    "react-scripts": "latest",
+    "react-select": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

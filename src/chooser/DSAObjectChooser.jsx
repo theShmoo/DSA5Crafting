@@ -3,34 +3,37 @@ import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
 
-import DSASelect from './DSASelect';
-import DSAStep from './DSAStep';
+import DSASelect from '../controls/DSASelect';
+import DSAStepContent from '../controls/DSAStepContent';
 import {CraftingObjects} from '../data/DSAObjects';
+
+const ID = "object"
 
 export default class DSAObjectChooser extends React.Component {
 
-  handleChange = (e) => {
+  handleChange = (value) => {
     // find the right cost object:
-    const o = CraftingObjects.find((c) => c.name === e.target.value);
-    this.props.onChange("object", o);
+    const o = CraftingObjects.find((c) => c.name === value);
+    this.props.onChange(ID, o);
+  }
+
+  handleBack = () => {
+    this.props.stepper.back(ID);
   }
 
   getOptions() {
     const {objecttype, talent} = this.props;
     return CraftingObjects.filter((c) => {
       return c.type === objecttype.name && c.talent === talent.name;
-    }).map((c) => {
-      return {value: c.name, label: c.name};
-    });
+    }).map((c) => ({value: c.name, label: c.name}));
   }
 
   render() {
     const {stepper, object} = this.props
-    const {next, back} = stepper;
     const active = object !== undefined;
-    return <DSAStep active={active} handleNext={next} handleBack={back}>
+    return <DSAStepContent active={active} handleNext={stepper.next} handleBack={this.handleBack}>
       <Typography>Wähle einen Gegenstand.</Typography>
-      <form autoComplete="off">
+      <form>
         <DSASelect
           options={this.getOptions()}
           value={active ? object.name : ""}
@@ -38,13 +41,12 @@ export default class DSAObjectChooser extends React.Component {
           label="Wähle"
         />
       </form>
-    </DSAStep>
+    </DSAStepContent>
   }
 }
 
 DSAObjectChooser.propTypes = {
   stepper: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
-  objecttype: PropTypes.object.isRequired,
-  talent: PropTypes.object.isRequired
+  objecttype: PropTypes.object.isRequired
 };

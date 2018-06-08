@@ -5,14 +5,15 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1,
+    marginBottom: theme.spacing.unit * 2
   },
   flex: {
     flex: 1,
   },
-};
+});
 
 function DSAAppBar(props) {
   const { classes, title } = props;

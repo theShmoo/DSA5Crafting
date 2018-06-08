@@ -3,17 +3,24 @@ import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
 
-import DSASelect from './DSASelect';
-import DSAStep from './DSAStep';
+import DSASelect from '../controls/DSASelect';
+import DSAStepContent from '../controls/DSAStepContent';
+import DSAItemList from '../controls/DSAItemList';
+import {Talent} from '../DSAMisc';
 
+const ID = "talent"
 
 export default class DSATalentChooser extends React.Component {
 
-  handleChange = (e) => {
+  handleChange = (value) => {
     // find the right cost object:
     const {objecttype} = this.props;
-    const f = objecttype.talents.find( (c) => c.name === e.target.value );
-    this.props.onChange("talent", f);
+    const f = objecttype.talents.find( (c) => c.name === value );
+    this.props.onChange(ID, f);
+  }
+
+  handleBack = () => {
+    this.props.stepper.back(ID);
   }
 
   getOptions() {
@@ -25,20 +32,25 @@ export default class DSATalentChooser extends React.Component {
 
   render() {
     const {stepper, talent} = this.props
-    const {next, back} = stepper;
     const active = talent !== undefined;
-    return <DSAStep active={active} handleNext={next} handleBack={back}>
+    return <DSAStepContent active={active} handleNext={stepper.next} handleBack={this.handleBack}>
         <Typography>Wähle das Handwerkstalent.</Typography>
-        <form autoComplete="off">
+        <form>
           <DSASelect
             options={this.getOptions()}
             value={active ? talent.name : ""}
             onChange={this.handleChange}
             label="Wähle"
-            helperText={active ? talent.description : ""}
           />
         </form>
-      </DSAStep>
+      {active &&
+        <DSAItemList items={[{title: talent.name,
+          items: [
+            {name: "Talent", value: talent.description},
+            {name: "Probe", value: Talent(talent.test)},
+          ]}]} />
+      }
+      </DSAStepContent>
   }
 }
 
