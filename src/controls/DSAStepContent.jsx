@@ -5,9 +5,9 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-    marginTop: theme.spacing.unit * 3,
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    marginTop: theme.spacing.unit,
     overflow: "-webkit-paged-x"
   }),
   button: {

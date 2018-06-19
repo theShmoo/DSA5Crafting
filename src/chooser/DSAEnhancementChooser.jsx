@@ -8,7 +8,7 @@ import DSAStepContent from '../controls/DSAStepContent';
 import DSAItemList from '../controls/DSAItemList';
 import {Enhancements} from '../data/DSACraftingData';
 
-import {GetEnhancements} from './DSAEnhancements';
+import {GetEnhancements} from '../objects/DSAEnhancements';
 
 const ID = "enhancements"
 

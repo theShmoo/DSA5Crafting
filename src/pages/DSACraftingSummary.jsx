@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button';
 import DSAInfoBox from '../controls/DSAInfoBox';
 import DSAItemList from '../controls/DSAItemList';
 
-import { GetEnhancements } from '../chooser/DSAEnhancements';
+import { GetEnhancements } from '../objects/DSAEnhancements';
+import { GetMaterial } from '../objects/DSAMaterials';
 import { Modifier, Talent} from '../DSAMisc';
 
 const styles = theme => ({
@@ -36,24 +37,14 @@ class DSACraftingSummary extends React.Component {
 
   getSummaryItems() {
     const { cost, objecttype, complexity, materials } = this.props.craft;
-    const {quality, material} = materials;
     let items = [
       {name: "Kosten", value: this.renderCost(cost)},
       {name: "Art des Gegenstandes", value: objecttype.description}
     ];
     if(complexity)
       items.push({name: complexity.name, value: complexity.description});
-    if(quality)
-    {
-      let materialItems = [
-        {name: "Qualität", value: quality.name},
-        {name: "Effekt", value: quality.effect},
-      ];
-      if(material)
-        materialItems.push(this.getSummaryMaterial(material));
+    items.push({title: "Material", items: GetMaterial(materials)});
 
-      items.push({title: "Material", items: materialItems});
-    }
     return items;
   }
 
@@ -72,24 +63,6 @@ class DSACraftingSummary extends React.Component {
     return items;
   }
 
-  getSummaryMaterial(material) {
-    const { effect, modifier, bf, structure, name } = material
-    let items = [
-      {name: "Effekt", value: effect},
-      {name: "Proben Erschwernis", value: Modifier(modifier)}
-    ];
-    if(bf)
-      items.push({name: "Bruchfaktor Veränderung", value: Modifier(bf)});
-    if(structure)
-      items.push({name: "Strukturpunkte Veränderung", value: Modifier(structure)});
-
-     return {
-      "title": name,
-      "subtitle": "Material",
-      "items": items
-    }
-  }
-
   getSummary() {
     const { talent, enhancements, object } = this.props.craft;
     let summary = {
@@ -105,7 +78,7 @@ class DSACraftingSummary extends React.Component {
 
   getAggregations()
   {
-    const { cost, enhancements, complexity, materials } = this.props.craft;
+    const { cost, enhancements, materials } = this.props.craft;
     const {quality, material} = materials;
     let interval = 0;
     let modifier = 0;

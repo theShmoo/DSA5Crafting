@@ -5,20 +5,17 @@ import Typography from '@material-ui/core/Typography';
 
 import DSASelect from '../controls/DSASelect';
 import DSAStepContent from '../controls/DSAStepContent';
-import DSASwitch from '../controls/DSASwitch'
-import DSADescription from '../controls/DSADescription'
+import DSASwitch from '../controls/DSASwitch';
+import DSADescription from '../controls/DSADescription';
+import DSAItemList from '../controls/DSAItemList';
 import { Quality, Materials, MagicMetals } from '../data/DSACraftingData';
 import { DefaultMaterial } from '../data/DSACraftingDefaults';
-import {Modifier} from '../DSAMisc.jsx'
+import {Modifier} from '../DSAMisc';
+import {GetMaterial} from '../objects/DSAMaterials';
 
 const ID = "materials"
 
 export default class DSAMaterialChooser extends React.Component {
-
-  state = {
-    complex: false,
-    magic: false
-  }
 
   getMaterials() {
     const {objecttype, talent} = this.props;
@@ -35,7 +32,9 @@ export default class DSAMaterialChooser extends React.Component {
   }
 
   handleSwitchChange = (name, value) => {
-    this.setState({[name]: value});
+    let materials  = this.props.materials;
+    materials[name] = value;
+    this.props.onChange(ID, materials);
   }
 
   handleMaterialsChange = (value) => {
@@ -70,44 +69,13 @@ export default class DSAMaterialChooser extends React.Component {
     this.props.stepper.back(ID, DefaultMaterial);
   }
 
-  renderMaterial(material) {
-    const { effect, modifier, bf, structure } = material
-    return (
-      <div>
-        <DSADescription caption="Effekt" text={effect} />
-        <DSADescription caption="Proben Erschwernis" text={Modifier(modifier)} />
-        { bf && <DSADescription caption="Bruchfaktor Veränderung" text={Modifier(bf)} />}
-        { structure && <DSADescription caption="Strukturpunkte Veränderung" text={Modifier(structure)} />}
-      </div>);
-  }
-
-  renderMagicMetal(metal) {
-    const { purities, info, price, purity } = metal;
-    const { effect, modifier, bf, structure } = purity;
-    return (
-      <div>
-        { info && <DSADescription caption="Info" text={info} /> }
-        <DSADescription caption="Preis" text={price} />
-        <DSASelect
-          options={purities.map((p) => ({value: p.purity, label: p.purity + "% Reinheit"}))}
-          value={purity.purity}
-          onChange={this.handlePurityChange}
-          label="Reinheit"
-        />
-        <DSADescription caption="Effect" text={effect} />
-        <DSADescription caption="Proben Erschwernis" text={Modifier(modifier)} />
-        { bf && <DSADescription caption="Bruchfaktor Veränderung" text={Modifier(bf)} />}
-        { structure && <DSADescription caption="Strukturpunkte Veränderung" text={Modifier(structure)} />}
-      </div>);
-  }
-
   render() {
-    const {complex, magic} = this.state;
     const {stepper, materials, objecttype, talent} = this.props;
-    const active = materials.material !== undefined;
+    const {complex, magic, material} = materials;
+    const active = material !== undefined;
     return (
       <DSAStepContent active={true} last={true} handleNext={stepper.next} handleBack={this.handleBack}>
-        <Typography>Wähle die Qualität des Materials.</Typography>
+        <Typography>Wähle die Qualität des Materials:</Typography>
         <form>
           <DSASelect
             options={this.getOptions(Quality)}
@@ -134,7 +102,7 @@ export default class DSAMaterialChooser extends React.Component {
           {complex && !magic &&
             <DSASelect
               options={this.getOptions(this.getMaterials())}
-              value={active ? materials.material.name : ""}
+              value={active ? material.name : ""}
               onChange={this.handleMaterialsChange}
               label="Material"
             />
@@ -142,15 +110,13 @@ export default class DSAMaterialChooser extends React.Component {
           {magic &&
             <DSASelect
               options={this.getOptions(this.getMagicMetals())}
-              value={active ? materials.material.name : ""}
+              value={active ? material.name : ""}
               onChange={this.handleMagicMetalsChange}
               label="Magische Metalle"
             />
           }
         </form>
-        {!complex && <DSADescription caption="Qualität" text={materials.quality.effect} />}
-        { complex && active && !magic && this.renderMaterial(materials.material) }
-        { magic && active && this.renderMagicMetal(materials.material) }
+        <DSAItemList items={GetMaterial(materials)} />
       </DSAStepContent>
     );
   }
