@@ -6,11 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import DSASelect from '../controls/DSASelect';
 import DSAStepContent from '../controls/DSAStepContent';
 import DSASwitch from '../controls/DSASwitch';
-import DSADescription from '../controls/DSADescription';
 import DSAItemList from '../controls/DSAItemList';
 import { Quality, Materials, MagicMetals } from '../data/DSACraftingData';
 import { DefaultMaterial } from '../data/DSACraftingDefaults';
-import {Modifier} from '../DSAMisc';
 import {GetMaterial} from '../objects/DSAMaterials';
 
 const ID = "materials"
@@ -113,6 +111,14 @@ export default class DSAMaterialChooser extends React.Component {
               value={active ? material.name : ""}
               onChange={this.handleMagicMetalsChange}
               label="Magische Metalle"
+            />
+          }
+          {active && magic &&
+            <DSASelect
+              options={material.purities.map((p) => ({value: p.purity, label: p.purity + "% Reinheit"}))}
+              value={material.purity ? material.purity.purity : 25}
+              onChange={this.handlePurityChange}
+              label="Reinheit"
             />
           }
         </form>

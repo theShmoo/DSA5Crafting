@@ -80,24 +80,35 @@ class DSACraftingSummary extends React.Component {
   {
     const { cost, enhancements, materials } = this.props.craft;
     const {quality, material} = materials;
-    let interval = 0;
-    let modifier = 0;
-    let tries = 7;
+    let aggInterval = 0;
+    let aggModifier = 0;
+    let aggTries = 7;
     let aggCost = cost.cost;
-    if(enhancements)
-    {
-      interval += enhancements.reduce((sum, e) => sum.interval + e.interval);
-      modifier += enhancements.reduce((sum, e) => sum.modifier + e.modifier);
+    if(enhancements) {
+      if(enhancements.length > 1) {
+        aggInterval += enhancements.reduce((sum, e) => sum.interval + e.interval);
+        aggModifier += enhancements.reduce((sum, e) => sum.modifier + e.modifier);
+      }
+      else if(enhancements.length === 1)
+      {
+        aggInterval += enhancements[0].interval;
+        aggInterval += enhancements[0].modifier;
+      }
     }
-    if(material)
-      modifier += material.modifier;
-    if(quality)
+    if(material) {
+      if(material.puritiy){
+        aggModifier += material.modifier;
+        aggTries = material.tries ? material.tries : aggTries;
+      }
+    }
+    if(quality) {
       aggCost += quality.cost;
+    }
     return {
       cost: aggCost,
-      modifier: modifier,
-      interval: interval,
-      tries: tries,
+      modifier: aggModifier,
+      interval: aggInterval,
+      tries: aggTries,
     }
   }
 
