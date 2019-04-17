@@ -299,6 +299,16 @@ export const Materials = {
   ]
 };
 
+export const Techniques = {
+  "weapon": [
+      {"name": "Fältelungstechnik", "effect": "+1 TP", "modifier": -1, "interval": 5, "bf": 1},
+      {"name": "Lehmbacktechnik", "effect": "keine Effekte", "modifier": -1, "interval": 3, "bf": 2},
+  ],
+  "armor": [
+      {"name": "Filigranes Kettenknüpfen", "effect": "Abzüge auf INI durch BE können ignoriert werden", "modifier": -1, "interval": 3, "bf": 0}
+  ]
+};
+
 export const Enhancements = {
   "weapon": [
     {"effect": "+1 AT-Modifikator", "modifier": -1, "interval": 2},

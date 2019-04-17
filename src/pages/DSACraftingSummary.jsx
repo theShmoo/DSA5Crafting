@@ -9,6 +9,7 @@ import DSAItemList from '../controls/DSAItemList';
 
 import { GetEnhancements } from '../objects/DSAEnhancements';
 import { GetMaterial } from '../objects/DSAMaterials';
+import { GetTechnique } from '../objects/DSACraftigTechniques';
 import { Modifier, Talent} from '../DSAMisc';
 
 const styles = theme => ({
@@ -48,7 +49,7 @@ class DSACraftingSummary extends React.Component {
     return items;
   }
 
-  getSummaryObject(object, enhancements) {
+  getSummaryObject(object, enhancements, technique) {
     let items = {
       "title": object.name,
       "subtitle": "Name",
@@ -60,11 +61,14 @@ class DSACraftingSummary extends React.Component {
     if(enhancements)
       items.items.push(...GetEnhancements(enhancements));
 
+    if(technique)
+      items.items.push(...GetTechnique(technique));
+
     return items;
   }
 
   getSummary() {
-    const { talent, enhancements, object } = this.props.craft;
+    const { talent, enhancements, object, technique } = this.props.craft;
     let summary = {
         "title": "Detaillierte Zusammenfassung",
         "items": this.getSummaryItems()
@@ -72,28 +76,32 @@ class DSACraftingSummary extends React.Component {
     if(talent)
       summary.items.push(this.getSummaryTalent(talent))
     if(object)
-      summary.items.push(this.getSummaryObject(object, enhancements));
+      summary.items.push(this.getSummaryObject(object, enhancements, technique));
     return [summary];
   }
 
   getAggregations()
   {
-    const { cost, enhancements, materials } = this.props.craft;
+    const { cost, enhancements, materials, technique } = this.props.craft;
     const {quality, material} = materials;
-    let aggInterval = 0;
+    let aggInterval = 1;
     let aggModifier = 0;
     let aggTries = 7;
     let aggCost = cost.cost;
     if(enhancements) {
       if(enhancements.length > 1) {
-        aggInterval += enhancements.reduce((sum, e) => sum.interval + e.interval);
+        aggInterval *= enhancements.reduce((sum, e) => sum.interval + e.interval);
         aggModifier += enhancements.reduce((sum, e) => sum.modifier + e.modifier);
       }
       else if(enhancements.length === 1)
       {
-        aggInterval += enhancements[0].interval;
+        aggInterval *= enhancements[0].interval;
         aggInterval += enhancements[0].modifier;
       }
+    }
+    if(technique) {
+      aggModifier += technique.modifier;
+      aggInterval *= technique.modifier;
     }
     if(material) {
       if(material.puritiy){
@@ -105,7 +113,7 @@ class DSACraftingSummary extends React.Component {
       aggCost += quality.cost;
     }
     return {
-      cost: aggCost,
+      cost: aggCost * aggInterval,
       modifier: aggModifier,
       interval: aggInterval,
       tries: aggTries,
@@ -119,7 +127,7 @@ class DSACraftingSummary extends React.Component {
         "items": [
           {name: "Kosten", value: aggregations.cost + "%"},
           {name: "Erschwernis", value: Modifier(aggregations.modifier)},
-          {name: "Interval", value: Modifier(aggregations.interval)},
+          {name: "Interval", value: "×" + (aggregations.interval)},
           {name: "Versuche der Sammelprobe", value: aggregations.tries}
         ]
       }];

@@ -10,6 +10,7 @@ import DSAInfoBox from '../controls/DSAInfoBox';
 import DSACostChooser from '../chooser/DSACostChooser';
 import DSAComplexityChooser from '../chooser/DSAComplexityChooser';
 import DSAMaterialChooser from '../chooser/DSAMaterialChooser';
+import DSATechniqueChooser from '../chooser/DSATechniqueChooser';
 import DSAObjectTypeChooser from '../chooser/DSAObjectTypeChooser';
 import DSAObjectChooser from '../chooser/DSAObjectChooser';
 import DSATalentChooser from '../chooser/DSATalentChooser';
@@ -59,7 +60,7 @@ class DSAMain extends React.Component {
   }
 
   getSteps() {
-    const {cost, complexity, materials, objecttype, talent, object, enhancements} = this.state.craft;
+    const {cost, complexity, materials, objecttype, talent, object, enhancements, technique} = this.state.craft;
     const handlers = {next: this.handleNext, back: this.handleBack};
     let steps = [
       {
@@ -96,6 +97,10 @@ class DSAMain extends React.Component {
       content: <DSAMaterialChooser materials={materials} objecttype={objecttype} talent={talent} stepper={handlers} onChange={this.handleStateChange} />,
       label: "Qualität: " + materials.quality.name +
         (materials.material ? " - " + materials.material.name : "")
+    });
+    steps.push({
+      content: <DSATechniqueChooser technique={technique} objecttype={objecttype} talent={talent} stepper={handlers} onChange={this.handleStateChange} />,
+      label: technique ? technique.name : "Fertigungstechnik"
     });
     return steps;
   }
