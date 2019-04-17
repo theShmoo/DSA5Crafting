@@ -10,7 +10,7 @@ import DSAItemList from '../controls/DSAItemList';
 import { GetEnhancements } from '../objects/DSAEnhancements';
 import { GetMaterial } from '../objects/DSAMaterials';
 import { GetTechnique } from '../objects/DSACraftigTechniques';
-import { Modifier, Talent} from '../DSAMisc';
+import { Modifier, Talent} from 'DSAMisc';
 
 const styles = theme => ({
   button: {
