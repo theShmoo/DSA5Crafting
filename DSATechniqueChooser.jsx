@@ -5,9 +5,12 @@ import Typography from '@material-ui/core/Typography';
 
 import DSASelect from '../controls/DSASelect';
 import DSAStepContent from '../controls/DSAStepContent';
-import DSADescription from '../controls/DSADescription';
+import DSAItemList from '../controls/DSAItemList';
+
 import {Techniques} from '../data/DSACraftingData';
 import { DefaultTechnique } from '../data/DSACraftingDefaults';
+
+import {GetTechnique} from './objects/DSACraftingTechniques';
 
 const ID = "technique"
 
@@ -15,7 +18,7 @@ export default class DSACostChooser extends React.Component {
 
   handleChange = (value) => {
     // find the right cost object:
-    const technique = Techniques.find( (c) => c.name === value);
+    const technique = Techniques[this.props.objecttype.name].find( (c) => c.name === value.value);
     this.props.onChange(ID, technique);
   }
 
@@ -24,7 +27,7 @@ export default class DSACostChooser extends React.Component {
   }
 
   getOptions(type) {
-    return Techniques.type.map((t) => {
+    return Techniques[type].map((t) => {
       return {value: t.name, label: t.name};
     });
   }
@@ -36,13 +39,13 @@ export default class DSACostChooser extends React.Component {
         <Typography>Die Herstellungstechnik.</Typography>
         <form>
           <DSASelect
-            options={this.getOptions(objecttype)}
+            options={this.getOptions(objecttype.name)}
             value={active ? technique.name : ""}
             onChange={this.handleChange}
             label="Wähle"
           />
         </form>
-        {active && <DSADescription caption="Herstellungstechnik" text={technique.name} />}
+        {active && <DSAItemList items={GetTechnique(technique)}/>}
       </DSAStepContent>
   }
 }

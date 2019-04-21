@@ -15,8 +15,9 @@ const ID = "objecttype"
 export default class DSAObjectTypeChooser extends React.Component {
 
   handleChange = (value) => {
-    // find the right cost object:
-    const f = Crafting.find( (c) => c.name === value );
+    const f = Crafting.find(
+        (c) => c.name === value.value
+      );
     this.props.onChange(ID, f);
   }
 
@@ -27,7 +28,10 @@ export default class DSAObjectTypeChooser extends React.Component {
   render() {
     const {stepper, objecttype} = this.props
     const active = objecttype !== undefined;
-    return <DSAStepContent active={active} handleNext={stepper.next} handleBack={this.handleBack}>
+    return <DSAStepContent
+      active={active}
+      handleNext={stepper.next}
+      handleBack={this.handleBack}>
       <Typography>Wähle die Art des Gegenstandes.</Typography>
       <form>
         <DSASelect

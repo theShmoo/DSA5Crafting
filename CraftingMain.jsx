@@ -7,14 +7,14 @@ import DSACraftingSummary from './DSACraftingSummary';
 import DSAStepper from '../controls/DSAStepper';
 import DSAInfoBox from '../controls/DSAInfoBox';
 
-import DSACostChooser from '../chooser/DSACostChooser';
-import DSAComplexityChooser from '../chooser/DSAComplexityChooser';
-import DSAMaterialChooser from '../chooser/DSAMaterialChooser';
-import DSATechniqueChooser from '../chooser/DSATechniqueChooser';
-import DSAObjectTypeChooser from '../chooser/DSAObjectTypeChooser';
-import DSAObjectChooser from '../chooser/DSAObjectChooser';
-import DSATalentChooser from '../chooser/DSATalentChooser';
-import DSAEnhancementChooser from '../chooser/DSAEnhancementChooser';
+import DSACostChooser from './DSACostChooser';
+import DSAComplexityChooser from './DSAComplexityChooser';
+import DSAMaterialChooser from './DSAMaterialChooser';
+import DSATechniqueChooser from './DSATechniqueChooser';
+import DSAObjectTypeChooser from './DSAObjectTypeChooser';
+import DSAObjectChooser from './DSAObjectChooser';
+import DSATalentChooser from './DSATalentChooser';
+import DSAEnhancementChooser from './DSAEnhancementChooser';
 
 import {DefaultState} from '../data/DSACraftingDefaults'
 
@@ -52,6 +52,9 @@ class DSAMain extends React.Component {
   };
 
   handleStateChange = (name, value) => {
+
+    console.log(name)
+    console.log(value)
     let craft = this.state.craft;
     craft[name] = value;
     this.setState({
@@ -86,6 +89,10 @@ class DSAMain extends React.Component {
         content: <DSAEnhancementChooser objecttype={objecttype} enhancements={enhancements} onChange={this.handleStateChange} stepper={handlers} />,
         label: enhancements ? enhancements.length + " Verbesserungen" : "Verbesserungen"
       })
+      steps.push({
+        content: <DSATechniqueChooser technique={technique} objecttype={objecttype} talent={talent} stepper={handlers} onChange={this.handleStateChange} />,
+        label: technique ? technique.name : "Fertigungstechnik"
+      });
     }
     else {
       steps.push({
@@ -97,10 +104,6 @@ class DSAMain extends React.Component {
       content: <DSAMaterialChooser materials={materials} objecttype={objecttype} talent={talent} stepper={handlers} onChange={this.handleStateChange} />,
       label: "Qualität: " + materials.quality.name +
         (materials.material ? " - " + materials.material.name : "")
-    });
-    steps.push({
-      content: <DSATechniqueChooser technique={technique} objecttype={objecttype} talent={talent} stepper={handlers} onChange={this.handleStateChange} />,
-      label: technique ? technique.name : "Fertigungstechnik"
     });
     return steps;
   }

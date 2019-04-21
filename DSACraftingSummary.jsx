@@ -7,10 +7,10 @@ import Button from '@material-ui/core/Button';
 import DSAInfoBox from '../controls/DSAInfoBox';
 import DSAItemList from '../controls/DSAItemList';
 
-import { GetEnhancements } from '../objects/DSAEnhancements';
-import { GetMaterial } from '../objects/DSAMaterials';
-import { GetTechnique } from '../objects/DSACraftigTechniques';
-import { Modifier, Talent} from '../DSAMisc';
+import { GetEnhancements } from './objects/DSAEnhancements';
+import { GetMaterial } from './objects/DSAMaterials';
+import { GetTechnique } from './objects/DSACraftingTechniques';
+import { Modifier, Talent} from './DSAMisc';
 
 const styles = theme => ({
   button: {

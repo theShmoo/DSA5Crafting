@@ -20,7 +20,7 @@ export default class DSACostChooser extends React.Component {
 
   handleChange = (value) => {
     // find the right cost object:
-    const cost = Costs.find( (c) => c.name === value);
+    const cost = Costs.find( (c) => c.name === value.value);
     this.props.onChange(ID, cost);
   }
 
@@ -31,7 +31,11 @@ export default class DSACostChooser extends React.Component {
   render() {
     const {stepper, cost} = this.props
     const active = cost !== undefined;
-    return <DSAStepContent active={active} first={true} handleNext={stepper.next} handleBack={this.handleBack}>
+    return <DSAStepContent
+      active={active}
+      first={true}
+      handleNext={stepper.next}
+      handleBack={this.handleBack}>
         <Typography>Die Materialkosten hängen von der Art der Herstellung ab.</Typography>
         <form>
           <DSASelect

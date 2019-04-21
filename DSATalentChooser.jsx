@@ -6,16 +6,15 @@ import Typography from '@material-ui/core/Typography';
 import DSASelect from '../controls/DSASelect';
 import DSAStepContent from '../controls/DSAStepContent';
 import DSAItemList from '../controls/DSAItemList';
-import {Talent} from '../DSAMisc';
+import {Talent} from './DSAMisc';
 
 const ID = "talent"
 
 export default class DSATalentChooser extends React.Component {
 
   handleChange = (value) => {
-    // find the right cost object:
     const {objecttype} = this.props;
-    const f = objecttype.talents.find( (c) => c.name === value );
+    const f = objecttype.talents.find( (c) => c.name === value.value );
     this.props.onChange(ID, f);
   }
 

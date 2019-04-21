@@ -9,7 +9,7 @@ import DSASwitch from '../controls/DSASwitch';
 import DSAItemList from '../controls/DSAItemList';
 import { Quality, Materials, MagicMetals } from '../data/DSACraftingData';
 import { DefaultMaterial } from '../data/DSACraftingDefaults';
-import {GetMaterial} from '../objects/DSAMaterials';
+import {GetMaterial} from './objects/DSAMaterials';
 
 const ID = "materials"
 
@@ -25,8 +25,31 @@ export default class DSAMaterialChooser extends React.Component {
     return MagicMetals[objecttype.name];
   }
 
+  convertPurityOption(purity) {
+    const p = purity.purity;
+    return {value: p + "", label: p + "% Reinheit"};
+  }
+
+  getPurities(material) {
+    const purities = material.purities.map((p) => this.convertPurityOption(p));
+    return purities
+  }
+
+  getPurity(material) {
+    let p = "25"
+    if(material.purity) {
+       p = material.purity.purity;
+    }
+    else if (material.purities) {
+       p = material.purities[0].purity;
+    }
+    return p;
+  }
+
   getOptions(materials) {
-    return materials.map((m) => ({value: m.name, label: m.name}));
+    return materials.map(
+      (m) => ({value: m.name, label: m.name})
+    );
   }
 
   handleSwitchChange = (name, value) => {
@@ -36,28 +59,29 @@ export default class DSAMaterialChooser extends React.Component {
   }
 
   handleMaterialsChange = (value) => {
-    const f = this.getMaterials().find( (c) => c.name === value );
+    const f = this.getMaterials().find( (c) => c.name === value.value );
     let materials = this.props.materials;
     materials.material = f;
     this.props.onChange(ID, materials);
   }
 
   handleMagicMetalsChange = (value) => {
-    const f = this.getMagicMetals().find( (c) => c.name === value );
+    const f = this.getMagicMetals().find( (c) => c.name === value.value );
     let materials = this.props.materials;
     materials.material = f;
     this.props.onChange(ID, materials);
   }
 
   handlePurityChange = (value) => {
-    const purity = this.props.materials.material.purities.find(p => p.purity === value);
-    let materials  = this.props.materials;
+    let materials = this.props.materials;
+    const purities = materials.material.purities
+    const purity = purities.find(p => p.purity === value.value);
     materials.material.purity = purity;
     this.props.onChange(ID, materials)
   }
 
   handleQualityChange = (value) => {
-    const q = Quality.find( (c) => c.name === value);
+    const q = Quality.find( (c) => c.name === value.value);
     let materials = this.props.materials;
     materials.quality = q;
     this.props.onChange(ID, materials)
@@ -72,8 +96,13 @@ export default class DSAMaterialChooser extends React.Component {
     const {complex, magic, material} = materials;
     const active = material !== undefined;
     return (
-      <DSAStepContent active={true} last={true} handleNext={stepper.next} handleBack={this.handleBack}>
-        <Typography>Wähle die Qualität des Materials:</Typography>
+      <DSAStepContent
+        active={true}
+        handleNext={stepper.next}
+        handleBack={this.handleBack}>
+        <Typography>
+          Wähle die Qualität des Materials:
+        </Typography>
         <form>
           <DSASelect
             options={this.getOptions(Quality)}
@@ -113,10 +142,10 @@ export default class DSAMaterialChooser extends React.Component {
               label="Magische Metalle"
             />
           }
-          {active && magic &&
+          {active && magic && material.purities &&
             <DSASelect
-              options={material.purities.map((p) => ({value: p.purity, label: p.purity + "% Reinheit"}))}
-              value={material.purity ? material.purity.purity : 25}
+              options={this.getPurities(material)}
+              value={this.getPurity(material)}
               onChange={this.handlePurityChange}
               label="Reinheit"
             />

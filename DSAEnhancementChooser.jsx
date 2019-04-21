@@ -8,22 +8,30 @@ import DSAStepContent from '../controls/DSAStepContent';
 import DSAItemList from '../controls/DSAItemList';
 import {Enhancements} from '../data/DSACraftingData';
 
-import {GetEnhancements} from '../objects/DSAEnhancements';
+import {GetEnhancements} from './objects/DSAEnhancements';
 
 const ID = "enhancements"
 
 export default class DSAEnhancementChooser extends React.Component {
 
+  getEffects(name) {
+    return Enhancements[name].map((e) => e.effect);
+  }
+
   handleChange = (values) => {
     // find the right object:
-    const { name } = this.props.objecttype;
-    const enhancements = Enhancements[name].filter( (e) => values.includes(e.effect));
+    const all = Enhancements[this.props.objecttype.name];
+    const effects = values.map( v => v.value);
+    const enhancements = all.filter( (e) => effects.includes(e.effect));
     this.props.onChange(ID, enhancements);
   }
 
   getOptions() {
     const { name } = this.props.objecttype;
-    return Enhancements[name].map((c) => ({value: c.effect, label: c.effect}));
+    return Enhancements[name].map((c) => ({
+      value: c.effect,
+      label: c.effect}
+    ));
   }
 
   handleBack = () => {

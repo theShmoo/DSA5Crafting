@@ -16,7 +16,7 @@ export default class DSAComplexityChooser extends React.Component {
 
   handleChange = (value) => {
     // find the right cost object:
-    const f = Complexity.find( (c) => c.name === value );
+    const f = Complexity.find( (c) => c.name === value.value );
     this.props.onChange("complexity", f);
   }
 
