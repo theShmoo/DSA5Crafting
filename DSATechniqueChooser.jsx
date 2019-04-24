@@ -10,7 +10,7 @@ import DSAItemList from '../controls/DSAItemList';
 import {Techniques} from '../data/DSACraftingData';
 import { DefaultTechnique } from '../data/DSACraftingDefaults';
 
-import {GetTechnique} from './objects/DSACraftingTechniques';
+import {GetTechnique} from './DSASummaryObject';
 
 const ID = "technique"
 
@@ -35,7 +35,7 @@ export default class DSACostChooser extends React.Component {
   render() {
     const {stepper, technique, objecttype} = this.props
     const active = technique !== undefined;
-    return <DSAStepContent active={active} first={true} handleNext={stepper.next} handleBack={this.handleBack}>
+    return <DSAStepContent active={true} handleNext={stepper.next} handleBack={this.handleBack}>
         <Typography>Die Herstellungstechnik.</Typography>
         <form>
           <DSASelect

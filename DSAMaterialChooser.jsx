@@ -9,7 +9,8 @@ import DSASwitch from '../controls/DSASwitch';
 import DSAItemList from '../controls/DSAItemList';
 import { Quality, Materials, MagicMetals } from '../data/DSACraftingData';
 import { DefaultMaterial } from '../data/DSACraftingDefaults';
-import {GetMaterial} from './objects/DSAMaterials';
+
+import {GetMaterial} from './DSASummaryObject';
 
 const ID = "materials"
 

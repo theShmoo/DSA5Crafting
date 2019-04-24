@@ -7,9 +7,7 @@ import Button from '@material-ui/core/Button';
 import DSAInfoBox from '../controls/DSAInfoBox';
 import DSAItemList from '../controls/DSAItemList';
 
-import { GetEnhancements } from './objects/DSAEnhancements';
-import { GetMaterial } from './objects/DSAMaterials';
-import { GetTechnique } from './objects/DSACraftingTechniques';
+import { GetTechnique, GetMaterial, GetEnhancements, GetObject } from './DSASummaryObject';
 import { Modifier, Talent} from './DSAMisc';
 
 const styles = theme => ({
@@ -37,46 +35,43 @@ class DSACraftingSummary extends React.Component {
   }
 
   getSummaryItems() {
-    const { cost, objecttype, complexity, materials } = this.props.craft;
+    const { cost, objecttype, complexity, materials, talent, object, enhancements, technique } = this.props.craft;
     let items = [
       {name: "Kosten", value: this.renderCost(cost)},
       {name: "Art des Gegenstandes", value: objecttype.description}
     ];
+
     if(complexity)
       items.push({name: complexity.name, value: complexity.description});
+
     items.push({title: "Material", items: GetMaterial(materials)});
+
+    if(talent)
+      items.push(this.getSummaryTalent(talent))
+
+    if(object)
+      items.push(...this.getSummaryObject(object, enhancements, technique));
 
     return items;
   }
 
   getSummaryObject(object, enhancements, technique) {
-    let items = {
-      "title": object.name,
-      "subtitle": "Name",
-      "items": [
-        {name: "Komplexität", value: Modifier(object.complexity)}
-      ]
-    };
+    let items = GetObject(object);
 
     if(enhancements)
-      items.items.push(...GetEnhancements(enhancements));
+      items[0].items.push(...GetEnhancements(enhancements));
 
     if(technique)
-      items.items.push(...GetTechnique(technique));
+      items[0].items.push(...GetTechnique(technique));
 
     return items;
   }
 
   getSummary() {
-    const { talent, enhancements, object, technique } = this.props.craft;
     let summary = {
         "title": "Detaillierte Zusammenfassung",
         "items": this.getSummaryItems()
       };
-    if(talent)
-      summary.items.push(this.getSummaryTalent(talent))
-    if(object)
-      summary.items.push(this.getSummaryObject(object, enhancements, technique));
     return [summary];
   }
 
@@ -87,36 +82,51 @@ class DSACraftingSummary extends React.Component {
     let aggInterval = 1;
     let aggModifier = 0;
     let aggTries = 7;
+    let aggBF = 0;
     let aggCost = cost.cost;
     if(enhancements) {
-      if(enhancements.length > 1) {
-        aggInterval *= enhancements.reduce((sum, e) => sum.interval + e.interval);
-        aggModifier += enhancements.reduce((sum, e) => sum.modifier + e.modifier);
-      }
-      else if(enhancements.length === 1)
-      {
-        aggInterval *= enhancements[0].interval;
-        aggInterval += enhancements[0].modifier;
-      }
+      enhancements.forEach((val, idx) => {
+        aggInterval *= val.interval;
+        aggModifier += val.modifier;
+        if(val.bf)
+          aggBF += val.bf;
+      });
     }
     if(technique) {
+      aggInterval *= technique.interval;
       aggModifier += technique.modifier;
-      aggInterval *= technique.modifier;
+      if(technique.tries)
+        aggTries = Math.min(technique.tries, aggTries);
+      if(technique.bf)
+        aggBF += technique.bf;
     }
     if(material) {
-      if(material.puritiy){
+      if(material.purity) {
+        aggModifier += material.purity.modifier;
+        if(material.purity.tries)
+          aggTries = Math.min(aggTries, material.purity.tries);
+        if(material.purity.bf)
+          aggBF += material.purity.bf;
+      }
+      else {
         aggModifier += material.modifier;
-        aggTries = material.tries ? material.tries : aggTries;
+        if(material.interval)
+          aggInterval *= material.interval;
+        if(material.tries)
+          aggTries = Math.min(aggTries, material.tries);
+        if(material.bf)
+          aggBF += material.bf;
       }
     }
     if(quality) {
       aggCost += quality.cost;
     }
     return {
-      cost: aggCost * aggInterval,
+      cost: aggCost,
       modifier: aggModifier,
       interval: aggInterval,
       tries: aggTries,
+      bf: aggBF,
     }
   }
 
@@ -128,7 +138,8 @@ class DSACraftingSummary extends React.Component {
           {name: "Kosten", value: aggregations.cost + "%"},
           {name: "Erschwernis", value: Modifier(aggregations.modifier)},
           {name: "Interval", value: "×" + (aggregations.interval)},
-          {name: "Versuche der Sammelprobe", value: aggregations.tries}
+          {name: "Versuche der Sammelprobe", value: aggregations.tries},
+          {name: "Bruchfaktor / Strukturpunkte", value: aggregations.bf}
         ]
       }];
   }

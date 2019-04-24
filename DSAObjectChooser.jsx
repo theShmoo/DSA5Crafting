@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 
 import DSASelect from '../controls/DSASelect';
+import DSAItemList from '../controls/DSAItemList';
 import DSAStepContent from '../controls/DSAStepContent';
 import {CraftingObjects} from '../data/DSAObjects';
+import {GetObject} from './DSASummaryObject';
 
 const ID = "object"
 
@@ -41,6 +43,7 @@ export default class DSAObjectChooser extends React.Component {
           label="Wähle"
         />
       </form>
+      {active && <DSAItemList items={GetObject(object)}/>}
     </DSAStepContent>
   }
 }

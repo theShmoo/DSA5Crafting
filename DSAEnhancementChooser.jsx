@@ -8,7 +8,7 @@ import DSAStepContent from '../controls/DSAStepContent';
 import DSAItemList from '../controls/DSAItemList';
 import {Enhancements} from '../data/DSACraftingData';
 
-import {GetEnhancements} from './objects/DSAEnhancements';
+import {GetEnhancements} from './DSASummaryObject';
 
 const ID = "enhancements"
 
@@ -41,7 +41,7 @@ export default class DSAEnhancementChooser extends React.Component {
   render() {
     const {stepper, enhancements, objecttype} = this.props
     const active = enhancements !== undefined;
-    return <DSAStepContent active={active} first={true} handleNext={stepper.next} handleBack={this.handleBack}>
+    return <DSAStepContent active={true} handleNext={stepper.next} handleBack={this.handleBack}>
         <Typography>Wähle die Verbesserungen für die {objecttype.description}.</Typography>
         <form>
           <DSASelect
