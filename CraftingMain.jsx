@@ -24,7 +24,7 @@ const styles = {
   }
 };
 
-class DSAMain extends React.Component {
+class CraftingMain extends React.Component {
 
   state = DefaultState();
 
@@ -125,8 +125,8 @@ class DSAMain extends React.Component {
   }
 };
 
-DSAMain.propTypes = {
+CraftingMain.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(DSAMain);
+export default withStyles(styles)(CraftingMain);
