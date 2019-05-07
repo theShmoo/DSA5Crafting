@@ -8,7 +8,7 @@ import DSAInfoBox from '../controls/DSAInfoBox';
 import DSAItemList from '../controls/DSAItemList';
 
 import { GetTechnique, GetMaterial, GetEnhancements, GetObject } from './DSASummaryObject';
-import { Modifier, Talent} from './DSAMisc';
+import { Modifier, Attribute} from '../utils/DSATextElements';
 
 const styles = theme => ({
   button: {
@@ -29,7 +29,7 @@ class DSACraftingSummary extends React.Component {
       "subtitle": "Talent",
       "items": [
         {name: "Beschreibung", value: talent.description},
-        {name: "Probe", value: Talent(talent.test)}
+        {name: "Probe", value: Attribute(talent.test)}
       ]
     };
   }

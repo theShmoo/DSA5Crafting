@@ -6,7 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import DSASelect from '../controls/DSASelect';
 import DSAStepContent from '../controls/DSAStepContent';
 import DSAItemList from '../controls/DSAItemList';
-import {Talent} from './DSAMisc';
+
+import {Attribute} from '../utils/DSATextElements';
 
 const ID = "talent"
 
@@ -46,7 +47,7 @@ export default class DSATalentChooser extends React.Component {
         <DSAItemList items={[{title: talent.name,
           items: [
             {name: "Talent", value: talent.description},
-            {name: "Probe", value: Talent(talent.test)},
+            {name: "Probe", value: Attribute(talent.test)},
           ]}]} />
       }
       </DSAStepContent>

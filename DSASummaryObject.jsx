@@ -1,5 +1,7 @@
-import {Modifier} from './DSAMisc'
 import {Complexity} from '../data/DSACraftingData'
+
+import {Modifier} from '../utils/DSATextElements'
+
 
 export function GetTechnique(technique) {
   const {name, effect, modifier, bf, interval} = technique;
