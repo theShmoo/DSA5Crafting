@@ -12,8 +12,8 @@ import { Modifier, Attribute} from '../utils/DSATextElements';
 
 const styles = theme => ({
   button: {
-    marginTop: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginTop: theme.spacing(1),
+    marginRight: theme.spacing(1),
   }
 });
 
